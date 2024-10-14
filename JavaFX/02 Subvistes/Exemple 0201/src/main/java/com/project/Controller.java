@@ -1,12 +1,20 @@
 package com.project;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import java.lang.classfile.Label;
+import java.util.ArrayList;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -30,14 +38,35 @@ public class Controller implements Initializable {
     @FXML
     private VBox yPane = new VBox();
 
-    String animals[] = { "Dog", "Cat", "Horse", "Cow", "Pig" };
-    String brands[] = { "Audi", "BMW", "Citroen", "Fiat", "Ford", "Honda", "Hyundai", "Kia", "Mazda", "Mercedes",
+    private String animals[] = { "Dog", "Cat", "Horse", "Cow", "Pig" };
+    private String brands[] = { "Audi", "BMW", "Citroen", "Fiat", "Ford", "Honda", "Hyundai", "Kia", "Mazda", "Mercedes",
             "Nissan", "Opel", "Peugeot", "Renault", "Seat", "Skoda", "Suzuki", "Toyota", "Volkswagen", "Volvo" };
+
+    private JSONArray jsonInfo;
 
     // Called when the FXML file is loaded
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        setAnimals(null);
+        try {
+            URL jsonFileURL = getClass().getResource("/assets/animals.json");
+            BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(jsonFileURL.openStream(), StandardCharsets.UTF_8));
+            StringBuilder jsonText = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                jsonText.append(line);
+            }
+            reader.close();
+
+            // Parseja el contingut del JSON
+            jsonInfo = new JSONArray(jsonText.toString());
+
+            // Actualitza la UI amb els valors inicials dels animals
+            setAnimals(null);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -58,13 +87,12 @@ public class Controller implements Initializable {
 
     @FXML
     private void setBrands(ActionEvent event) {
-        ArrayList<String> list = new ArrayList<>();
-        for (String name : brands) {
-            list.add(name);
-        }
+        // Exemple de com pots continuar utilitzant altres funcions
+        String[] brands = { "Audi", "BMW", "Citroen", "Fiat", "Ford", "Honda", "Hyundai", "Kia", "Mazda", "Mercedes",
+                "Nissan", "Opel", "Peugeot", "Renault", "Seat", "Skoda", "Suzuki", "Toyota", "Volkswagen", "Volvo" };
 
         yPane.getChildren().clear();
-        for (String s : list) {
+        for (String s : brands) {
             Label label = new Label(s);
             label.setStyle("-fx-border-color: black;");
             yPane.getChildren().add(label);
@@ -74,56 +102,35 @@ public class Controller implements Initializable {
     @FXML
     private void setFXML(ActionEvent event) throws Exception {
 
-        // List of two strings with spices and animals
-        String[][] list = new String[][] {
-                new String[] { "Mamals", "Dod", "black" },
-                new String[] { "Mamals", "Cat", "grey" },
-                new String[] { "Mamals", "Horse", "brown" },
-                new String[] { "Mamals", "Cow", "white" },
-                new String[] { "Mamals", "Pig", "pink" },
-                new String[] { "Birds", "Pidgeon", "grey" },
-                new String[] { "Birds", "Duck", "white" },
-                new String[] { "Birds", "Eagle", "brown" },
-                new String[] { "Birds", "Owl", "black" },
-                new String[] { "Birds", "Parrot", "green" },
-                new String[] { "Fish", "Goldfish", "orange" },
-                new String[] { "Fish", "Shark", "grey" },
-                new String[] { "Fish", "Tuna", "silver" },
-                new String[] { "Fish", "Salmon", "pink" },
-                new String[] { "Fish", "Cod", "white" },
-                new String[] { "Reptiles", "Snake", "black" },
-                new String[] { "Reptiles", "Lizard", "green" },
-                new String[] { "Reptiles", "Turtle", "brown" },
-                new String[] { "Reptiles", "Crocodile", "grey" },
-                new String[] { "Reptiles", "Alligator", "green" },
-                new String[] { "Amphibians", "Frog", "green" },
-                new String[] { "Amphibians", "Toad", "brown" },
-                new String[] { "Amphibians", "Salamander", "grey" },
-                new String[] { "Amphibians", "Newt", "brown" },
-                new String[] { "Amphibians", "Axolotl", "pink" }
-        };
-
-        // Load the .fxml template
+        // Obtenir el recurs del template .fxml
         URL resource = this.getClass().getResource("/assets/listItem.fxml");
 
-        // Clear the destination
+        // Netejar el contingut existent
         yPane.getChildren().clear();
 
-        // For each list item
-        for (String[] listElement : list) {
+        // Iterar sobre els elements del JSONArray 'jsonInfo' (ja carregat a initialize)
+        for (int i = 0; i < jsonInfo.length(); i++) {
+            // Obtenir l'objecte JSON individual (animal)
+            JSONObject animal = jsonInfo.getJSONObject(i);
 
-            // Create a new element from 'listItem.fxml'
+            // Extreure la informació necessària del JSON
+            String category = animal.getString("category");
+            String name = animal.getString("animal");
+            String color = animal.getString("color");
+
+            // Carregar el template de 'listItem.fxml'
             FXMLLoader loader = new FXMLLoader(resource);
             Parent itemTemplate = loader.load();
             ControllerListItem itemController = loader.getController();
 
-            // Set element values with information from 'listElement'
-            itemController.setTitle(listElement[1]);
-            itemController.setSubtitle(listElement[0]);
-            itemController.setCircleColor(listElement[2]);
+            // Assignar els valors als controls del template
+            itemController.setTitle(name);
+            itemController.setSubtitle(category);
+            itemController.setCircleColor(color);
 
-            // Add the new element to 'yPane'
+            // Afegir el nou element a 'yPane'
             yPane.getChildren().add(itemTemplate);
         }
     }
+
 }
