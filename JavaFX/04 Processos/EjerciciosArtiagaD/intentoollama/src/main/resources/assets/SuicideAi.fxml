@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="603.0" prefWidth="898.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.project.Controller">
+   <children>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="-8.0" layoutY="-5.0" prefHeight="76.0" prefWidth="700.0" style="-fx-background-color: lightblue;" text="SuicideAI" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold Italic" size="36.0" />
+         </font>
+      </Label>
+      <ScrollPane fx:id="scroll" layoutY="70.0" prefHeight="469.0" prefWidth="692.0">
+         <content>
+            <VBox fx:id="box" prefHeight="467.0" prefWidth="689.0" />
+         </content>
+      </ScrollPane>
+      <VBox layoutX="692.0" prefHeight="539.0" prefWidth="206.0">
+         <children>
+            <AnchorPane prefHeight="543.0" prefWidth="206.0">
+               <children>
+                  <Button fx:id="clearButton" onAction="#clearScreen" layoutX="112.0" layoutY="426.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="80.0" style="-fx-background-color: lightblue;" text="Clear">
+                     <font>
+                        <Font name="System Bold Italic" size="18.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="stopButton" onAction="#cancelRequest" layoutX="112.0" layoutY="481.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="80.0" style="-fx-background-color: lightblue;" text="Stop">
+                     <font>
+                        <Font name="System Bold Italic" size="18.0" />
+                     </font>
+                  </Button>
+                  <ImageView fitHeight="193.0" fx:id="image" fitWidth="182.0" layoutX="12.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </AnchorPane>
+         </children>
+      </VBox>
+      <HBox layoutX="14.0" layoutY="545.0" prefHeight="44.0" prefWidth="872.0">
+         <children>
+            <AnchorPane prefHeight="44.0" prefWidth="42.0">
+               <children>
+                  <Button fx:id="filesButton" onAction="#actionLoad" layoutY="8.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="28.0" style="-fx-background-color: lightblue;" text="📎" />
+               </children>
+            </AnchorPane>
+            <TextField fx:id="writeHere" prefHeight="44.0" prefWidth="809.0" promptText="Escriu aqui la teva pregunta..." />
+            <AnchorPane prefHeight="44.0" prefWidth="44.0">
+               <children>
+                  <Button fx:id="sendButton" onAction="#enviarMensaje" alignment="CENTER" contentDisplay="CENTER" layoutX="3.0" layoutY="10.0" mnemonicParsing="false" style="-fx-background-color: lightblue; -fx-background-radius: 10;" text="↑" textAlignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+               </children>
+            </AnchorPane>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.TextFlow?>
+
+
+<BorderPane maxHeight="-Infinity" fx:id="borderPane" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="125.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.project.ControllerChat">
+   <top>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label alignment="CENTER" fx:id="suicideAiLabel" contentDisplay="CENTER" prefHeight="43.0" prefWidth="153.0" text="SuicideAi" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold Italic" size="29.0" />
+               </font>
+            </Label>
+            <TextFlow fx:id="aiText" layoutX="10.0" layoutY="47.0" prefHeight="66.0" prefWidth="577.0" />
+         </children>
+      </AnchorPane>
+   </top>
+</BorderPane>
