@@ -10,23 +10,18 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import javafx.application.Platform;
-import java.net.URL;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.ResourceBundle;
-import javafx.fxml.Initializable;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.net.http.HttpRequest.BodyPublishers;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -71,7 +66,7 @@ public class Controller{
     private Future<?> streamReadingTask;
     private boolean isFirst = true;
     private Map<Node, ControllerChat> layoutControllerMap = new HashMap<>();
-    private String base64Image;
+    private String b64Image;
 
     @FXML
     public void initialize() {
@@ -81,7 +76,7 @@ public class Controller{
             if (event.getCode() == KeyCode.ENTER) {
                 // Si el campo de texto no está vacío
                 if (!writeHere.getText().trim().isEmpty()) {
-                    enviarMensaje(); // Envía el mensaje
+                    sendAmessage(); // Envía el mensaje
                 }
             }
         });
@@ -89,7 +84,7 @@ public class Controller{
     
     // Método que se encarga de enviar el mensaje y mostrarlo en la interfaz
     @FXML
-    public void enviarMensaje() {
+    public void sendAmessage() {
         try {
             // Carga el diseño del mensaje desde el archivo FXML
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/assets/UserMssg.fxml")));
@@ -101,10 +96,10 @@ public class Controller{
             box.getChildren().add(layout2); // Agrega el nuevo mensaje a la caja
 
             // Verifica si hay una imagen cargada
-            if (base64Image != null) {
-                sendMessageWithImage(writeHere.getText(), base64Image); // Envía el mensaje con imagen
+            if (b64Image != null) {
+                imageMessage(writeHere.getText(), b64Image); // Envía el mensaje con imagen
             } else {
-                sendMessageToOllama(writeHere.getText()); // Envía solo el mensaje
+                sendMessagetoAI(writeHere.getText()); // Envía solo el mensaje
             }
             scroll.layout(); // Actualiza el diseño del ScrollPane
             scroll.setVvalue(1.0); // Desplaza la vista hacia abajo
@@ -120,7 +115,7 @@ public class Controller{
 
     // Esto es para cargar la imagen
     @FXML
-    private void actionLoad() {
+    private void fileLoad() {
         File initialDirectory = new File("./");
         FileChooser fileChooser = new FileChooser();
         if (initialDirectory.exists()) {
@@ -149,7 +144,7 @@ public class Controller{
                 byte[] imageBytes = outputStream.toByteArray();
 
                 // Encode to Base64
-                base64Image = Base64.getEncoder().encodeToString(imageBytes);
+                b64Image = Base64.getEncoder().encodeToString(imageBytes);
 
                 outputStream.close();
             } catch (IOException e) {
@@ -158,11 +153,11 @@ public class Controller{
         }
     }
 
-    public void sendMessageWithImage(String userMessage, String base64Image) {
+    public void imageMessage(String userMessage, String b64Image) {
         isCancelled.set(false);
 
         HttpClient client = HttpClient.newHttpClient();
-        String requestBody = String.format("{\"model\": \"llava-phi3\", \"prompt\": \"%s\", \"images\": [\"%s\"]}", userMessage, base64Image);
+        String requestBody = String.format("{\"model\": \"llava-phi3\", \"prompt\": \"%s\", \"images\": [\"%s\"]}", userMessage, b64Image);
 
         Platform.runLater(() -> writeHere.setText("Processing..."));
         HttpRequest request = HttpRequest.newBuilder()
@@ -255,13 +250,13 @@ public class Controller{
     }
 
     public void clearScreen(ActionEvent actionEvent) {
-        base64Image = null;
+        b64Image = null;
         image.setVisible(false);
         box.getChildren().clear();
     }
 
     @FXML
-    public void sendMessageToOllama(String userMessage) throws IOException, InterruptedException {
+    public void sendMessagetoAI(String userMessage) throws IOException, InterruptedException {
         isFirst = true;
         HttpClient client = HttpClient.newHttpClient();
         String requestBody = String.format("{\"model\": \"llama3.2:1b\", \"prompt\": \"%s\", \"stream\": true}", userMessage);

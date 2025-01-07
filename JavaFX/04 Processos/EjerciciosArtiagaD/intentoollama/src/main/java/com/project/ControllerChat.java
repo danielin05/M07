@@ -11,7 +11,7 @@ public class ControllerChat {
     @FXML
     public TextFlow aiText = new TextFlow();
     public BorderPane borderPane;
-    public Label suicideAiLabel;
+    public Label danielAiLabel;
 
     public void addText(String text) {
         if (aiText == null) {
@@ -29,7 +29,7 @@ public class ControllerChat {
     }
 
     public void setHeight(int num,double height) {
-        borderPane.setPrefHeight(aiText.getHeight() + suicideAiLabel.getHeight() + suicideAiLabel.getHeight());
+        borderPane.setPrefHeight(aiText.getHeight() + danielAiLabel.getHeight() + danielAiLabel.getHeight());
         if (height == 0) {
             borderPane.setPrefHeight((num/3)+5);
         }

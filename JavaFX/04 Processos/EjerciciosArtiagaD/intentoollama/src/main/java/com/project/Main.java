@@ -13,10 +13,10 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
-        Parent largeroot = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/assets/SuicideAi.fxml")));
+        Parent largeroot = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/assets/danielAi.fxml")));
         Scene scene = new Scene(largeroot);
 
-        stage.setTitle("SuicideAi");
+        stage.setTitle("danielAi");
         stage.setWidth(920);
         stage.setHeight(635);
         stage.setResizable(false);

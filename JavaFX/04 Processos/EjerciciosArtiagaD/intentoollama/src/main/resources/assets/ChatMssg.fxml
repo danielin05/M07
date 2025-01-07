@@ -11,7 +11,7 @@
    <top>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Label alignment="CENTER" fx:id="suicideAiLabel" contentDisplay="CENTER" prefHeight="43.0" prefWidth="153.0" text="SuicideAi" textAlignment="CENTER">
+            <Label alignment="CENTER" fx:id="danielAiLabel" contentDisplay="CENTER" prefHeight="43.0" prefWidth="153.0" text="danielAI" textAlignment="CENTER">
                <font>
                   <Font name="System Bold Italic" size="29.0" />
                </font>

@@ -13,7 +13,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="603.0" prefWidth="898.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.project.Controller">
    <children>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="-8.0" layoutY="-5.0" prefHeight="76.0" prefWidth="700.0" style="-fx-background-color: lightblue;" text="SuicideAI" textAlignment="CENTER">
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="-8.0" layoutY="-5.0" prefHeight="76.0" prefWidth="700.0" style="-fx-background-color: lightblue;" text="danielAI" textAlignment="CENTER">
          <font>
             <Font name="System Bold Italic" size="36.0" />
          </font>
@@ -46,13 +46,13 @@
          <children>
             <AnchorPane prefHeight="44.0" prefWidth="42.0">
                <children>
-                  <Button fx:id="filesButton" onAction="#actionLoad" layoutY="8.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="28.0" style="-fx-background-color: lightblue;" text="📎" />
+                  <Button fx:id="filesButton" onAction="#fileLoad" layoutY="8.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="28.0" style="-fx-background-color: lightblue;" text="📎" />
                </children>
             </AnchorPane>
             <TextField fx:id="writeHere" prefHeight="44.0" prefWidth="809.0" promptText="Escriu aqui la teva pregunta..." />
             <AnchorPane prefHeight="44.0" prefWidth="44.0">
                <children>
-                  <Button fx:id="sendButton" onAction="#enviarMensaje" alignment="CENTER" contentDisplay="CENTER" layoutX="3.0" layoutY="10.0" mnemonicParsing="false" style="-fx-background-color: lightblue; -fx-background-radius: 10;" text="↑" textAlignment="CENTER">
+                  <Button fx:id="sendButton" onAction="#sendAmessage" alignment="CENTER" contentDisplay="CENTER" layoutX="3.0" layoutY="10.0" mnemonicParsing="false" style="-fx-background-color: lightblue; -fx-background-radius: 10;" text="↑" textAlignment="CENTER">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
